@@ -25,6 +25,7 @@ import {
 import { shoppingCartState } from "atoms";
 
 import { shoppingCartItemProps } from "const";
+import { currencyFormat } from "lib/utils";
 
 export default function CartItemCard(props: shoppingCartItemProps) {
   const { id, title, authors, type, price, averageRating, quantity, stock } =
@@ -71,7 +72,14 @@ export default function CartItemCard(props: shoppingCartItemProps) {
   }
 
   return (
-    <Card sx={{ display: "flex" }}>
+    <Card
+      sx={{
+        display: "flex",
+        boxShadow:
+          "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
+        border: "1px solid #e9eaee",
+      }}
+    >
       <CardMedia
         component="img"
         // height="140"
@@ -139,6 +147,33 @@ export default function CartItemCard(props: shoppingCartItemProps) {
             Delete
           </Button>
         </CardContent>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "1rem",
+          marginLeft: "auto",
+        }}
+      >
+        <Typography variant="h5">
+          <Typography
+            component="span"
+            variant="body2"
+            sx={{ paddingRight: 0.5 }}
+          >
+            $
+          </Typography>
+          {currencyFormat(price)}
+          <Typography
+            component="span"
+            variant="body2"
+            color="text.secondary"
+            sx={{ paddingLeft: 0.5 }}
+          >
+            per one
+          </Typography>
+        </Typography>
       </Box>
     </Card>
   );

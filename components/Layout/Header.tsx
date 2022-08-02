@@ -23,6 +23,8 @@ import Divider from "@mui/material/Divider";
 import { shoppingCartState } from "atoms";
 import { useRecoilState } from "recoil";
 
+import { calcCartItemSum } from "lib/utils";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -179,10 +181,7 @@ export default function PrimarySearchAppBar() {
                 color="inherit"
               >
                 <Badge
-                  badgeContent={shoppingCart.reduce((prev, item) => {
-                    const qty = item.quantity;
-                    return prev + qty;
-                  }, 0)}
+                  badgeContent={calcCartItemSum(shoppingCart)}
                   color="error"
                 >
                   <ShoppingCartCheckoutIcon />

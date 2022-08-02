@@ -15,15 +15,11 @@ import { shoppingCartState } from "atoms";
 import { useRecoilState } from "recoil";
 
 import { BookProps } from "const";
-
-function currencyFormat(num: number | string) {
-  return parseFloat(`${num}`)
-    .toFixed(2)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-}
+import { currencyFormat } from "lib/utils";
 
 export default function BasicCard(props: BookProps) {
-  const { id, title, type, price, averageRating, authors, ratings } = props;
+  const { id, title, type, price, averageRating, authors, ratings, stock } =
+    props;
   const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -37,12 +33,22 @@ export default function BasicCard(props: BookProps) {
     setShoppingCart((oldShoppingCart) => {
       const existingItem = oldShoppingCart.find((i) => i.id === id);
       if (existingItem) {
+        if (existingItem.quantity >= stock) {
+          enqueueSnackbar(`Out of stock!`, { variant: "error" });
+          return [...oldShoppingCart];
+        }
         const newItem = {
           ...existingItem,
           quantity: existingItem.quantity + 1,
         };
+        enqueueSnackbar(`"${title}" was successfully added.`, {
+          variant: "success",
+        });
         return [...oldShoppingCart.filter((i) => i.id !== id), newItem];
       }
+      enqueueSnackbar(`"${title}" was successfully added.`, {
+        variant: "success",
+      });
       return [
         ...oldShoppingCart,
         {
@@ -89,8 +95,8 @@ export default function BasicCard(props: BookProps) {
       <CardActions>
         <IconButton
           aria-label="add to cart"
+          disabled={stock <= 0}
           onClick={() => {
-            handleClick();
             addItem();
           }}
         >
