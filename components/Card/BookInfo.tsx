@@ -10,15 +10,6 @@ import Rating from "@mui/material/Rating";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
 interface BookInfoCardProps {
   id: number;
   title: string;
