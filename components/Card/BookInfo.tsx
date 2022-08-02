@@ -9,6 +9,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Rating from "@mui/material/Rating";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { VariantType, useSnackbar } from "notistack";
 
 import { shoppingCartState } from "atoms";
 import { useRecoilState } from "recoil";
@@ -28,6 +29,13 @@ function currencyFormat(num: number) {
 export default function BasicCard(props: BookInfoCardProps) {
   const { id, title, type, price, avgRatings } = props;
   const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
+
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClick = () => {
+    enqueueSnackbar(`"${title}" was successfully added.`, {
+      variant: "success",
+    });
+  };
 
   const addItem = () => {
     setShoppingCart((oldShoppingCart) => [
@@ -74,6 +82,7 @@ export default function BasicCard(props: BookInfoCardProps) {
         <IconButton
           aria-label="add to cart"
           onClick={() => {
+            handleClick();
             addItem();
           }}
         >

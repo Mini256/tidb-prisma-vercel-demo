@@ -15,3 +15,12 @@ export const shoppingCartState = atom<BookInfoCardProps[]>({
   key: "shoppingCartState",
   default: [],
 });
+
+// export const snackbarState = atom<{
+//   timestamp: string;
+//   message: string;
+//   variant: "error" | "warning" | "info" | "success";
+// } | null>({
+//   key: "snackbarState",
+//   default: null,
+// });
