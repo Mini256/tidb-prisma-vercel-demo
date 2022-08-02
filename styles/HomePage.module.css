@@ -11,7 +11,7 @@
 .main {
   width: calc(100% - 16rem);
   background-color: #fff;
-  padding-top: 2rem;
+  /* padding-top: 2rem; */
 }
 
 .bookList {
