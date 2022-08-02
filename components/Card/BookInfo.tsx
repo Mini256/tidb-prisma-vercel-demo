@@ -14,20 +14,16 @@ import { VariantType, useSnackbar } from "notistack";
 import { shoppingCartState } from "atoms";
 import { useRecoilState } from "recoil";
 
-export interface BookInfoCardProps {
-  id: number;
-  title: string;
-  type?: string;
-  price: number;
-  avgRatings: number;
+import { BookProps } from "const";
+
+function currencyFormat(num: number | string) {
+  return parseFloat(`${num}`)
+    .toFixed(2)
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 
-function currencyFormat(num: number) {
-  return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-}
-
-export default function BasicCard(props: BookInfoCardProps) {
-  const { id, title, type, price, avgRatings } = props;
+export default function BasicCard(props: BookProps) {
+  const { id, title, type, price, averageRating, authors, ratings } = props;
   const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -38,16 +34,23 @@ export default function BasicCard(props: BookInfoCardProps) {
   };
 
   const addItem = () => {
-    setShoppingCart((oldShoppingCart) => [
-      ...oldShoppingCart,
-      {
-        id,
-        title,
-        type,
-        price,
-        avgRatings,
-      },
-    ]);
+    setShoppingCart((oldShoppingCart) => {
+      const existingItem = oldShoppingCart.find((i) => i.id === id);
+      if (existingItem) {
+        const newItem = {
+          ...existingItem,
+          quantity: existingItem.quantity + 1,
+        };
+        return [...oldShoppingCart.filter((i) => i.id !== id), newItem];
+      }
+      return [
+        ...oldShoppingCart,
+        {
+          ...props,
+          quantity: 1,
+        },
+      ];
+    });
   };
 
   return (
@@ -68,15 +71,20 @@ export default function BasicCard(props: BookInfoCardProps) {
           {title}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          author 1
+          {authors.map((author) => author.author.name).join(`, `)}
         </Typography>
-        <Rating
-          name="read-only"
-          precision={0.5}
-          value={avgRatings}
-          size="small"
-          readOnly
-        />
+        <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Rating
+            name="read-only"
+            precision={0.5}
+            value={averageRating}
+            size="small"
+            readOnly
+          />
+          <Typography component="div" variant="body2" sx={{ color: "#616161" }}>
+            {ratings}
+          </Typography>
+        </Box>
       </CardContent>
       <CardActions>
         <IconButton

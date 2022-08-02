@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -140,23 +141,26 @@ export default function PrimarySearchAppBar() {
       <AppBar position="static">
         <Toolbar>
           <MenuBookIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Bookstore
-          </Typography>
+          <Link href="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+                cursor: "pointer",
+              }}
+            >
+              Bookstore
+            </Typography>
+          </Link>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -168,7 +172,24 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
+            <Link href="/cart">
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge
+                  badgeContent={shoppingCart.reduce((prev, item) => {
+                    const qty = item.quantity;
+                    return prev + qty;
+                  }, 0)}
+                  color="error"
+                >
+                  <ShoppingCartCheckoutIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            {/* <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
@@ -176,7 +197,7 @@ export default function PrimarySearchAppBar() {
               <Badge badgeContent={shoppingCart.length} color="error">
                 <ShoppingCartCheckoutIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"

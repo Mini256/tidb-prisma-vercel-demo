@@ -1,6 +1,7 @@
 import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
 
-import { BookInfoCardProps } from "components/Card/BookInfo";
+import { shoppingCartItemProps } from "const";
+
 // export const homeBookListState = atom({
 //   key: "homeBookListState",
 //   default: [],
@@ -11,7 +12,12 @@ export const homePageIdxState = atom({
   default: 1,
 });
 
-export const shoppingCartState = atom<BookInfoCardProps[]>({
+export const homePageBookSumState = atom({
+  key: "homePageBookSumState",
+  default: 0,
+});
+
+export const shoppingCartState = atom<shoppingCartItemProps[]>({
   key: "shoppingCartState",
   default: [],
 });
