@@ -109,8 +109,12 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
+      <MenuItem onClick={handleMenuClose} disabled>
+        My account
+      </MenuItem>
+      <Link href="/orders">
+        <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
+      </Link>
     </Menu>
   );
 
@@ -131,10 +135,14 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>Shopping Cart</MenuItem>
+      <Link href="/cart">
+        <MenuItem>Shopping Cart</MenuItem>
+      </Link>
       <Divider />
-      <MenuItem>My Account</MenuItem>
-      <MenuItem>Orders</MenuItem>
+      <MenuItem disabled>My Account</MenuItem>
+      <Link href="/orders">
+        <MenuItem>Orders</MenuItem>
+      </Link>
     </Menu>
   );
 
@@ -142,7 +150,9 @@ export default function PrimarySearchAppBar() {
     <>
       <AppBar position="static">
         <Toolbar>
-          <MenuBookIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <Link href="/">
+            <MenuBookIcon sx={{ display: { md: "flex" }, mr: 1 }} />
+          </Link>
           <Link href="/">
             <Typography
               variant="h6"
@@ -188,15 +198,6 @@ export default function PrimarySearchAppBar() {
                 </Badge>
               </IconButton>
             </Link>
-            {/* <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={shoppingCart.length} color="error">
-                <ShoppingCartCheckoutIcon />
-              </Badge>
-            </IconButton> */}
             <IconButton
               size="large"
               edge="end"
