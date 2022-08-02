@@ -19,6 +19,9 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Divider from "@mui/material/Divider";
 
+import { shoppingCartState } from "atoms";
+import { useRecoilState } from "recoil";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -63,6 +66,8 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+
+  const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -168,7 +173,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show 4 new mails"
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={shoppingCart.length} color="error">
                 <ShoppingCartCheckoutIcon />
               </Badge>
             </IconButton>

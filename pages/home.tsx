@@ -47,8 +47,8 @@ const BookList = () => {
     case "loading":
       return (
         <div className={styles.bookList}>
-          {Array.from(Array(PAGE_SIZE)).map((i) => (
-            <BookSekeleton key={i} />
+          {Array.from(Array(PAGE_SIZE)).map((i, idx) => (
+            <BookSekeleton key={idx} />
           ))}
         </div>
       );

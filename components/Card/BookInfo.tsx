@@ -10,7 +10,10 @@ import Rating from "@mui/material/Rating";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-interface BookInfoCardProps {
+import { shoppingCartState } from "atoms";
+import { useRecoilState } from "recoil";
+
+export interface BookInfoCardProps {
   id: number;
   title: string;
   type?: string;
@@ -24,6 +27,21 @@ function currencyFormat(num: number) {
 
 export default function BasicCard(props: BookInfoCardProps) {
   const { id, title, type, price, avgRatings } = props;
+  const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
+
+  const addItem = () => {
+    setShoppingCart((oldShoppingCart) => [
+      ...oldShoppingCart,
+      {
+        id,
+        title,
+        type,
+        price,
+        avgRatings,
+      },
+    ]);
+  };
+
   return (
     <Card sx={{ width: 256 }}>
       <CardMedia
@@ -47,13 +65,18 @@ export default function BasicCard(props: BookInfoCardProps) {
         <Rating
           name="read-only"
           precision={0.5}
-          value={3.5}
+          value={avgRatings}
           size="small"
           readOnly
         />
       </CardContent>
       <CardActions>
-        <IconButton aria-label="add to cart">
+        <IconButton
+          aria-label="add to cart"
+          onClick={() => {
+            addItem();
+          }}
+        >
           <AddShoppingCartIcon />
         </IconButton>
         <Typography
