@@ -7,7 +7,11 @@ import { fetchBooks } from "lib/http";
 export const currentPageIdxQuery = selector({
   key: "CurrentPageIdx",
   get: async ({ get }) => {
-    const response = await fetchBooks(get(homePageIdxState), 8, 1);
+    const page = get(homePageIdxState);
+    const size = 8;
+    const type = ``;
+    const sort = ``;
+    const response = await fetchBooks({ page, size, type, sort });
     return response;
   },
 });
