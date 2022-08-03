@@ -112,9 +112,9 @@ export default function PrimarySearchAppBar() {
       <MenuItem onClick={handleMenuClose} disabled>
         My account
       </MenuItem>
-      <Link href="/orders">
+      {/* <Link href="/orders">
         <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
-      </Link>
+      </Link> */}
     </Menu>
   );
 
@@ -140,9 +140,9 @@ export default function PrimarySearchAppBar() {
       </Link>
       <Divider />
       <MenuItem disabled>My Account</MenuItem>
-      <Link href="/orders">
+      {/* <Link href="/orders">
         <MenuItem>Orders</MenuItem>
-      </Link>
+      </Link> */}
     </Menu>
   );
 
