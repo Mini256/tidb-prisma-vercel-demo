@@ -60,7 +60,14 @@ export default function BasicCard(props: BookProps) {
   };
 
   return (
-    <Card sx={{ width: 256 }}>
+    <Card
+      sx={{
+        width: 256,
+        boxShadow:
+          "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
+        border: "1px solid #e9eaee",
+      }}
+    >
       <CardMedia
         component="img"
         height="140"

@@ -35,7 +35,7 @@ const OrdersPage: NextPage = () => {
 
       <CommonLayout>
         <Container>
-          <Typography component="h1" variant="h4">
+          <Typography component="h1" variant="h4" sx={{ pt: "1rem" }}>
             History Orders
           </Typography>
           {/* <CartList /> */}

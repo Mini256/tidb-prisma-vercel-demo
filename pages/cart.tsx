@@ -35,7 +35,7 @@ const CartPage: NextPage = () => {
 
       <CommonLayout>
         <Container>
-          <Typography component="h1" variant="h4">
+          <Typography component="h1" variant="h4" sx={{ pt: "1rem" }}>
             Shopping Cart
           </Typography>
           <CartList />
