@@ -4,7 +4,7 @@ import { RecoilRoot, useRecoilSnapshot } from "recoil";
 import { useEffect } from "react";
 import { SnackbarProvider } from "notistack";
 
-function DebugObserver(): React.Node {
+function DebugObserver(): any {
   const snapshot = useRecoilSnapshot();
   useEffect(() => {
     console.debug("The following atoms were modified:");

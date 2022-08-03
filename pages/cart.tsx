@@ -15,8 +15,8 @@ import {
   useSetRecoilState,
   useRecoilValueLoadable,
 } from "recoil";
-import { homePageIdxState } from "atoms";
-import { currentPageIdxQuery } from "selectors";
+import {} from "atoms";
+import {} from "selectors";
 
 import styles from "../styles/HomePage.module.css";
 import CommonLayout from "components/Layout";

@@ -1,16 +1,13 @@
 import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
 
-import { homePageIdxState } from "atoms";
+import { homePageQueryState } from "atoms";
 
 import { fetchBooks } from "lib/http";
 
-export const currentPageIdxQuery = selector({
-  key: "CurrentPageIdx",
+export const homePageQuery = selector({
+  key: "homePage",
   get: async ({ get }) => {
-    const page = get(homePageIdxState);
-    const size = 8;
-    const type = ``;
-    const sort = ``;
+    const { page, size, type, sort } = get(homePageQueryState);
     const response = await fetchBooks({ page, size, type, sort });
     return response;
   },

@@ -26,3 +26,19 @@ export async function fetchBooks(data: {
     return { error, content: [], total: 0 };
   }
 }
+
+export async function fetchBookTypes(): Promise<{
+  content: string[];
+  error?: any;
+}> {
+  try {
+    const response = await axios.get(`/api/books/types`);
+    if (response.status !== 200) {
+      throw new Error(`${response.status} - ${response.data}`);
+    }
+    return { content: response.data as string[] };
+  } catch (error) {
+    console.error(error);
+    return { error, content: [] };
+  }
+}
