@@ -31,3 +31,8 @@ export function roundAt2DecimalPlaces(num: number) {
 export function roundHalf(num: number) {
   return Math.round(num * 2) / 2;
 }
+
+export function isInDesiredForm(str: string) {
+  var n = Math.floor(Number(str));
+  return n !== Infinity && String(n) === str && n >= 0;
+}

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type {
   NextPage,
   GetStaticProps,
@@ -28,6 +28,8 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 
 import {
   useRecoilState,
@@ -43,11 +45,21 @@ import CommonLayout from "components/Layout";
 import LeftNav from "components/Navigation/HomeLeftNav";
 import BookInfoCard from "components/Card/BookInfo";
 import CartList from "components/List/CartList";
+import BookInfoFormDialog from "components/Dialog/BookInfoDialog";
 import { currencyFormat, roundHalf } from "lib/utils";
-import { BookRatingsProps, starLabels } from "const";
+import { BookRatingsProps, starLabels, BookDetailProps } from "const";
 
 const BookInfoSection = () => {
+  const [bookDetailsState, setBookDetailsState] = useState<
+    BookDetailProps | undefined
+  >();
+
   const bookDetailsLodable = useRecoilValueLoadable(bookInfoQuery);
+
+  const handleUpdate = (data: BookDetailProps) => {
+    setBookDetailsState(data);
+  };
+
   switch (bookDetailsLodable.state) {
     case "hasValue":
       const data = bookDetailsLodable.contents.content;
@@ -81,7 +93,13 @@ const BookInfoSection = () => {
               />
             </Paper>
             <Stack spacing={2}>
-              <Typography variant="h5">Book Details</Typography>
+              <Typography variant="h5">
+                Book Details
+                {/* <IconButton size="small">
+                  <EditIcon fontSize="small" />
+                </IconButton> */}
+                <BookInfoFormDialog data={data} onSuccess={handleUpdate} />
+              </Typography>
               <Typography>
                 {`Type: `}
                 <Typography
@@ -119,7 +137,7 @@ const BookInfoSection = () => {
                   color="text.secondary"
                   component="span"
                 >
-                  {data.stock}
+                  {bookDetailsState?.stock || data.stock}
                 </Typography>
               </Typography>
               <Typography>
