@@ -68,7 +68,7 @@ const BookTypeComponent = (props: { loading: boolean; data: string[] }) => {
 
 export default function BasicList(props: { className?: string }) {
   const [checked, setChecked] = React.useState([0]);
-  const [loadingBookType, setLoadingBookType] = React.useState(true);
+  const [loadingBookType, setLoadingBookType] = React.useState(false);
 
   const [bookTypeList, setBookTypeList] = useRecoilState(bookTypeListState);
 
@@ -76,6 +76,7 @@ export default function BasicList(props: { className?: string }) {
 
   React.useEffect(() => {
     const func = async () => {
+      setLoadingBookType(true);
       const res = await fetchBookTypes();
       const { error, content } = res;
       if (error) {

@@ -27,3 +27,7 @@ export function calcCartItemTotalPrice(cartItems: shoppingCartItemProps[]) {
 export function roundAt2DecimalPlaces(num: number) {
   return Math.round((num + Number.EPSILON) * 100) / 100;
 }
+
+export function roundHalf(num: number) {
+  return Math.round(num * 2) / 2;
+}

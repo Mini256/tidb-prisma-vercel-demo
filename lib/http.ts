@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-import { BookProps } from "const";
+import { BookProps, BookDetailProps, BookRatingsProps } from "const";
 
 export async function fetchBooks(data: {
   page?: number;
@@ -40,5 +40,37 @@ export async function fetchBookTypes(): Promise<{
   } catch (error) {
     console.error(error);
     return { error, content: [] };
+  }
+}
+
+export async function fetchBookDetailsById(id: string): Promise<{
+  content: BookDetailProps;
+  error?: any;
+}> {
+  try {
+    const response = await axios.get(`/api/books/${id}`);
+    if (response.status !== 200) {
+      throw new Error(`${response.status} - ${response.data}`);
+    }
+    return { content: response.data as BookDetailProps };
+  } catch (error) {
+    console.error(error);
+    return { error, content: {} as BookDetailProps };
+  }
+}
+
+export async function fetchBookRatingsById(id: string): Promise<{
+  content: { content: BookRatingsProps[]; total: number };
+  error?: any;
+}> {
+  try {
+    const response = await axios.get(`/api/books/${id}/ratings`);
+    if (response.status !== 200) {
+      throw new Error(`${response.status} - ${response.data}`);
+    }
+    return { content: response.data };
+  } catch (error) {
+    console.error(error);
+    return { error, content: { content: [], total: 0 } };
   }
 }

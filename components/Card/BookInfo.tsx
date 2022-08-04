@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -88,9 +89,12 @@ export default function BasicCard(props: BookProps) {
               {type.replaceAll(`_nbsp_`, ` `).replaceAll(`_amp_`, `&`)}
             </Typography>
           )}
-          <Typography variant="h5" component="div">
-            {title}
-          </Typography>
+          <Link href={`/book/${id}`}>
+            <Typography variant="h5" component="div" sx={{ cursor: "pointer" }}>
+              {title}
+            </Typography>
+          </Link>
+
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
             {authors.map((author) => author.author.name).join(`, `)}
           </Typography>
