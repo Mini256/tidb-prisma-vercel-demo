@@ -7,6 +7,8 @@ import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Pagination from "@mui/material/Pagination";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
 
 import {
@@ -14,6 +16,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
   useRecoilValueLoadable,
+  SetterOrUpdater,
 } from "recoil";
 import { homePageBookSumState, homePageQueryState } from "atoms";
 import { homePageQuery } from "selectors";
@@ -69,6 +72,45 @@ const BookList = (props: { page: number }) => {
   }
 };
 
+const FilterChips = (props: {
+  data: { page: number; type: string; sort: string; size: number };
+  onChange: SetterOrUpdater<{
+    page: number;
+    type: string;
+    sort: string;
+    size: number;
+  }>;
+}) => {
+  const { data, onChange } = props;
+  const handleDelete = (key: "type" | "sort") => {
+    onChange((originData) => ({ ...originData, [key]: "" }));
+  };
+  return (
+    <Stack direction="row" spacing={1}>
+      {data.type && (
+        <Chip
+          label={`Type: ${data.type
+            .replaceAll(`_nbsp_`, ` `)
+            .replaceAll(`_amp_`, `&`)}`}
+          size="small"
+          onDelete={() => {
+            handleDelete("type");
+          }}
+        />
+      )}
+      {data.sort && (
+        <Chip
+          label={`Sort: ${data.sort}`}
+          size="small"
+          onDelete={() => {
+            handleDelete("sort");
+          }}
+        />
+      )}
+    </Stack>
+  );
+};
+
 const Home: NextPage = () => {
   const [homePageQueryData, setHomePageQueryData] =
     useRecoilState(homePageQueryState);
@@ -87,6 +129,12 @@ const Home: NextPage = () => {
           <LeftNav className={styles.nav} />
           <main className={styles.main}>
             <Container>
+              {(homePageQueryData.sort || homePageQueryData.type) && (
+                <FilterChips
+                  data={homePageQueryData}
+                  onChange={setHomePageQueryData}
+                />
+              )}
               <BookList page={homePageQueryData.page} />
               <Box
                 sx={{

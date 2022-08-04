@@ -66,39 +66,52 @@ export default function BasicCard(props: BookProps) {
         boxShadow:
           "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
         border: "1px solid #e9eaee",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <CardMedia
-        component="img"
-        height="140"
-        image={`https://picsum.photos/seed/${id}/200/300`}
-        alt={title}
-      />
-      <CardContent>
-        {type && (
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {type}
+      <Box>
+        <CardMedia
+          component="img"
+          height="140"
+          image={`https://picsum.photos/seed/${id}/200/300`}
+          alt={title}
+        />
+        <CardContent>
+          {type && (
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              {type.replaceAll(`_nbsp_`, ` `).replaceAll(`_amp_`, `&`)}
+            </Typography>
+          )}
+          <Typography variant="h5" component="div">
+            {title}
           </Typography>
-        )}
-        <Typography variant="h5" component="div">
-          {title}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {authors.map((author) => author.author.name).join(`, `)}
-        </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <Rating
-            name="read-only"
-            precision={0.5}
-            value={averageRating}
-            size="small"
-            readOnly
-          />
-          <Typography component="div" variant="body2" sx={{ color: "#616161" }}>
-            {ratings}
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {authors.map((author) => author.author.name).join(`, `)}
           </Typography>
-        </Box>
-      </CardContent>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Rating
+              name="read-only"
+              precision={0.5}
+              value={averageRating}
+              size="small"
+              readOnly
+            />
+            <Typography
+              component="div"
+              variant="body2"
+              sx={{ color: "#616161" }}
+            >
+              {ratings}
+            </Typography>
+          </Box>
+        </CardContent>
+      </Box>
       <CardActions>
         <IconButton
           aria-label="add to cart"
