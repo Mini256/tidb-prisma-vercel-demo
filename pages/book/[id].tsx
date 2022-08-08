@@ -30,6 +30,8 @@ import LinearProgress, {
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
 
 import {
   useRecoilState,
@@ -46,6 +48,7 @@ import LeftNav from "components/Navigation/HomeLeftNav";
 import BookInfoCard from "components/Card/BookInfo";
 import CartList from "components/List/CartList";
 import BookInfoFormDialog from "components/Dialog/BookInfoDialog";
+import AlertDialog from "components/Dialog/DeleteRatingDialog";
 import { currencyFormat, roundHalf } from "lib/utils";
 import { BookRatingsProps, starLabels, BookDetailProps } from "const";
 
@@ -220,6 +223,12 @@ const ReviewItem = (props: BookRatingsProps) => {
             {props.user.nickname.substring(0, 1)}
           </Avatar>
           <Typography color="text.secondary">{props.user.nickname}</Typography>
+          <AlertDialog
+            bookId={props.bookId}
+            userId={props.userId}
+            score={props.score}
+            ratedAt={props.ratedAt}
+          />
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <Rating
