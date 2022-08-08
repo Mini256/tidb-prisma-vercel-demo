@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
@@ -12,7 +13,6 @@ import Button from "@mui/material/Button";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
 import BookIcon from "@mui/icons-material/Book";
 import Avatar from "@mui/material/Avatar";
@@ -57,14 +57,17 @@ const BookInfoSection = () => {
       return (
         <>
           <Breadcrumbs aria-label="breadcrumb" sx={{ padding: "1rem 0" }}>
-            <Link
-              underline="hover"
-              color="inherit"
-              sx={{ display: "flex", alignItems: "center" }}
-              href="/"
-            >
-              <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-              Book
+            <Link href="/">
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                Book
+              </Typography>
             </Link>
             <Typography
               sx={{ display: "flex", alignItems: "center" }}
@@ -149,14 +152,17 @@ const BookInfoSection = () => {
       return (
         <>
           <Breadcrumbs aria-label="breadcrumb" sx={{ padding: "1rem 0" }}>
-            <Link
-              underline="hover"
-              color="inherit"
-              sx={{ display: "flex", alignItems: "center" }}
-              href="/"
-            >
-              <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-              Book
+            <Link href="/">
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                Book
+              </Typography>
             </Link>
             <Typography
               sx={{ display: "flex", alignItems: "center" }}
