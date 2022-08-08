@@ -104,7 +104,7 @@ export async function addRatingByBookID(
   error?: any;
 }> {
   try {
-    const response = await axios.post(`/api/books/${bookID}`, params);
+    const response = await axios.post(`/api/books/${bookID}/ratings`, params);
     if (response.status !== 200) {
       throw new Error(`${response.status} - ${response.data}`);
     }

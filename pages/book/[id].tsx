@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import type {
-  NextPage,
-  GetStaticProps,
-  GetStaticPaths,
-  GetServerSideProps,
-} from "next";
+import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
@@ -28,10 +23,6 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Tooltip from "@mui/material/Tooltip";
 
 import {
   useRecoilState,
@@ -42,13 +33,10 @@ import {
 import { bookDetailsIdState } from "atoms";
 import { bookInfoQuery, bookRatingQuery } from "selectors";
 
-import styles from "../styles/HomePage.module.css";
 import CommonLayout from "components/Layout";
-import LeftNav from "components/Navigation/HomeLeftNav";
-import BookInfoCard from "components/Card/BookInfo";
-import CartList from "components/List/CartList";
 import BookInfoFormDialog from "components/Dialog/BookInfoDialog";
-import AlertDialog from "components/Dialog/DeleteRatingDialog";
+import DeleteRatingDialog from "components/Dialog/DeleteRatingDialog";
+import AddRatingDialog from "components/Dialog/AddRatingDialog";
 import { currencyFormat, roundHalf } from "lib/utils";
 import { BookRatingsProps, starLabels, BookDetailProps } from "const";
 
@@ -223,7 +211,7 @@ const ReviewItem = (props: BookRatingsProps) => {
             {props.user.nickname.substring(0, 1)}
           </Avatar>
           <Typography color="text.secondary">{props.user.nickname}</Typography>
-          <AlertDialog
+          <DeleteRatingDialog
             bookId={props.bookId}
             userId={props.userId}
             score={props.score}
@@ -361,6 +349,7 @@ const ReviewOverview = (props: { content: BookRatingsProps[] }) => {
 
 const CustomerReviewSection = () => {
   const bookRatingLodable = useRecoilValueLoadable(bookRatingQuery);
+  const [bookDetailsId] = useRecoilState(bookDetailsIdState);
   switch (bookRatingLodable.state) {
     case "hasValue":
       const data = bookRatingLodable.contents.content;
@@ -368,6 +357,7 @@ const CustomerReviewSection = () => {
         <>
           <Typography component="h2" variant="h5">
             Customer Reviews
+            {bookDetailsId && <AddRatingDialog bookId={bookDetailsId} />}
           </Typography>
           <Box sx={{ display: "flex", gap: "2rem" }}>
             <ReviewOverview content={data.content} />
