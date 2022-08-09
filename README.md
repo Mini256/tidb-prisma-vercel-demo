@@ -32,6 +32,8 @@ After cluster created, you can get the connection details by clicking the `Conne
 
 Get `User` and `Host` field from the dialog.
 
+> Note: For importing initial data from local, you can set an Allow All traffic filter here by entering an IP address of `0.0.0.0/0`.
+
 ![image](https://user-images.githubusercontent.com/56986964/183590950-93fb5778-128b-40e1-ab85-33994bd6f4de.png)
 
 Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/bookshop`
