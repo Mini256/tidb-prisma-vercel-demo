@@ -36,9 +36,29 @@ Get `User` and `Host` field from the dialog.
 
 Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/bookshop`
 
-#### 2. Import mock data
+#### 2. Import table structures and data
 
-Use `TiDB Cloud Import` to init data by following [this guide](https://docs.pingcap.com/tidbcloud/dev-guide-bookshop-schema-design#method-2-via-tidb-cloud-import).
+2.1 Install `TiUP`
+
+TiUP is a component manager for TiDB.
+
+Run the following in your terminal:
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
+```
+
+2.2 Run `TiUP demo`
+
+> You can get `User` and `Host` from TiDB Cloud panel.
+
+Run the following in your terminal:
+
+```bash
+tiup demo bookshop prepare -U <User> -H <Host> -p <Password>
+```
+
+> More details about importing table structures and data please refer to our [doc](https://docs.pingcap.com/tidbcloud/dev-guide-bookshop-schema-design#method-1-via-tiup-demo).
 
 #### 3. Deploy on Vercel
 
