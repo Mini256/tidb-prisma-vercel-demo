@@ -15,6 +15,8 @@ import { Rating } from "@mui/material";
 import InputUnstyled, { InputUnstyledProps } from "@mui/base/InputUnstyled";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useSnackbar } from "notistack";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import {
   useRecoilState,
@@ -22,10 +24,76 @@ import {
   useSetRecoilState,
   useRecoilValueLoadable,
 } from "recoil";
-import { shoppingCartState } from "atoms";
+import { shoppingCartState, currentUserIdState } from "atoms";
 
 import { shoppingCartItemProps } from "const";
-import { currencyFormat } from "lib/utils";
+import {
+  currencyFormat,
+  calcCartItemSum,
+  calcCartItemTotalPrice,
+} from "lib/utils";
+import { buyBook } from "lib/http";
+
+const SubTotal = (props: { sum: number; price: number; bookID: string }) => {
+  const { sum, price, bookID } = props;
+  const [loading, setLoading] = React.useState(false);
+
+  const [currentUserId] = useRecoilState(currentUserIdState);
+  const [, setShoppingCart] = useRecoilState(shoppingCartState);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleBuyClick = async () => {
+    setLoading(true);
+    const response = await buyBook(bookID, {
+      userID: currentUserId,
+      quality: sum,
+    });
+    if (response.error) {
+      enqueueSnackbar(`Error: ${response.error}.`, {
+        variant: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    enqueueSnackbar(`${response.content?.message}`, {
+      variant: "success",
+    });
+    setLoading(false);
+    setShoppingCart((oldShoppingCart) => {
+      return oldShoppingCart.filter((i) => i.id !== bookID);
+    });
+  };
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+        gap: "1rem",
+      }}
+    >
+      <Typography sx={{ fontWeight: "bold" }}>
+        <Typography component="span" sx={{ paddingRight: 0.5 }}>
+          {sum === 1
+            ? `Subtotal: (${sum} item) $`
+            : `Subtotal: (${sum} items) $`}
+        </Typography>
+        {price}
+      </Typography>
+      <LoadingButton
+        variant="contained"
+        loading={loading}
+        onClick={() => {
+          handleBuyClick();
+        }}
+      >
+        Proceed to Purchase
+      </LoadingButton>
+    </Box>
+  );
+};
 
 export default function CartItemCard(props: shoppingCartItemProps) {
   const { id, title, authors, type, price, averageRating, quantity, stock } =
@@ -154,6 +222,8 @@ export default function CartItemCard(props: shoppingCartItemProps) {
           flexDirection: "column",
           padding: "1rem",
           marginLeft: "auto",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
         }}
       >
         <Typography variant="h5">
@@ -174,6 +244,11 @@ export default function CartItemCard(props: shoppingCartItemProps) {
             per one
           </Typography>
         </Typography>
+        <SubTotal
+          sum={quantity}
+          price={calcCartItemTotalPrice([props])}
+          bookID={id}
+        />
       </Box>
     </Card>
   );
