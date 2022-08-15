@@ -1,4 +1,5 @@
 import * as React from "react";
+import Image from "next/image";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -148,13 +149,14 @@ export default function CartItemCard(props: shoppingCartItemProps) {
         border: "1px solid #e9eaee",
       }}
     >
-      <CardMedia
-        component="img"
-        // height="140"
-        sx={{ width: 150 }}
-        image={`https://picsum.photos/seed/${id}/200/300`}
-        alt={title}
-      />
+      <CardMedia sx={{ display: "flex" }}>
+        <Image
+          src={`https://picsum.photos/seed/${id}/200/300`}
+          alt={title}
+          width={150}
+          height={225}
+        />
+      </CardMedia>
       <Box
         sx={{
           display: "flex",
@@ -169,7 +171,7 @@ export default function CartItemCard(props: shoppingCartItemProps) {
               color="text.secondary"
               gutterBottom
             >
-              {type}
+              {type.replaceAll(`_nbsp_`, ` `).replaceAll(`_amp_`, `&`)}
             </Typography>
           )}
           <Typography variant="h5" component="div">
